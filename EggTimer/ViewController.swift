@@ -1,0 +1,45 @@
+//
+//  ViewController.swift
+//  EggTimer
+//
+//  Created by Angela Yu on 08/07/2019.
+//  Copyright © 2019 The App Brewery. All rights reserved.
+//
+
+import UIKit
+
+class ViewController: UIViewController {
+    
+    let eggTime = ["Soft": 5,"Medium": 7,"Hard": 12]
+    var secondHitungan = 60
+    var timer = Timer()
+    var totalTime = 0
+    var secondTime = 0
+    
+    
+    
+    @IBOutlet weak var eggLabel: UILabel!
+    
+    @IBOutlet weak var progressBar: UIProgressView!
+    
+    @IBAction func eggBtn(_ sender: UIButton) {
+        timer.invalidate()
+        let hardness = sender.currentTitle!
+        secondHitungan = eggTime[hardness]!
+        
+        Timer.scheduledTimer(timeInterval: 1.0,target: self,selector: #selector(eggSelector),userInfo: nil, repeats: true)
+        
+    }
+    
+    @objc func eggSelector(){
+        if secondTime < totalTime {
+            secondTime += 1
+            progressBar.progress = Float(secondTime) / Float(totalTime)
+        }
+        else {
+            timer.invalidate()
+            eggLabel.text = "sudah selesai"
+        }
+    }
+    
+}
